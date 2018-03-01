@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
+import './semantic/dist/semantic.min.css'
+
+
+import CoinsContainer from './containers/CoinsContainer'
 
 class App extends Component {
+
   render() {
     return (
-      <div className="App">
-        <h1>Hello</h1>
+      <div>
+        <CoinsContainer />
       </div>
     );
   }
