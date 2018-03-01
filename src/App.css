@@ -30,9 +30,5 @@
 .logo {
   margin-top: 10px;
   transform-origin:50% 50%;
-  animation:3s rotateRight infinite linear;
-}
-
-@keyframes rotateRight{
-    100%{ transform:rotate(360deg); }
+  animation:4s App-logo-spin infinite linear;
 }

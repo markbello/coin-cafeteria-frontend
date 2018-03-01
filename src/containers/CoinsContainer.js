@@ -11,13 +11,13 @@ class CoinsContainer extends React.Component {
   componentDidMount() {
     fetch('https://api.coinmarketcap.com/v1/ticker/')
     .then(res => res.json())
-    .then(json => this.setState({coins: json.slice(0,4)}))
+    .then(json => this.setState({coins: json}))
   }
 
 
   render() {
     let coins = this.state.coins.map(coin => {
-      let logo = require(`../media/${coin.symbol.toLowerCase()}.png`)
+      let logo = require(`../icon/${coin.symbol.toLowerCase()}.png`)
       return <Coin key= {coin.id} coin={coin} logo={logo} />
     })
     return (
