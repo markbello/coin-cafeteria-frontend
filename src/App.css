@@ -30,5 +30,5 @@
 .logo {
   margin-top: 10px;
   transform-origin:50% 50%;
-  animation:4s App-logo-spin infinite linear;
+  animation:3s App-logo-spin infinite linear;
 }
