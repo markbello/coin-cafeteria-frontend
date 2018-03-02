@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container, Header, Card} from 'semantic-ui-react'
 
-const Coin = (props) => {
+const CoinInfo = (props) => {
   const {name, rank, symbol, price_usd, percent_change_1h, percent_change_24h, percent_change_7d, market_cap_usd, available_supply, total_supply} = props.coin
 
   let image = <img src={props.logo} width="40px" height="40px" />
@@ -91,4 +91,4 @@ const Coin = (props) => {
   )
 }
 
-export default Coin
+export default CoinInfo
