@@ -1,5 +1,6 @@
 import React from 'react'
 import {Container, Header, Card} from 'semantic-ui-react'
+import NewsContainer from './NewsContainer'
 
 const CoinInfo = (props) => {
   const {name, rank, symbol, price_usd, percent_change_1h, percent_change_24h, percent_change_7d, market_cap_usd, available_supply, total_supply} = props.coin
@@ -10,6 +11,8 @@ const CoinInfo = (props) => {
       <Header as="h1" textAlign="center">
         {image} {name} ({symbol}) ${price_usd}
       </Header>
+
+      <NewsContainer name={name} symbol={symbol} />
 
       <Card.Group itemsPerRow={4}>
 
