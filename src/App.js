@@ -20,10 +20,16 @@ class App extends Component {
     })
   }
 
+  handleLogout = event => {
+    this.setState({
+      loggedIn: false
+    })
+  }
+
   render() {
     return (
       <Router>
-        <Route exact path = "/" render={() => <CoinsContainer loggedIn={this.state.loggedIn} handleLogin={this.handleLogin} /> }  />
+        <Route exact path = "/" render={() => <CoinsContainer loggedIn={this.state.loggedIn} handleLogin={this.handleLogin} handleLogout={this.handleLogout} /> }  />
       </Router>
     );
   }
