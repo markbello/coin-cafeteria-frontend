@@ -14,7 +14,7 @@ class NavBar extends React.Component {
     return (
     <Container>
       <Header as='h1' color="red" textAlign="center" >
-        <div onClick={this.props.goBackToAll}>Cypto Coins</div>
+        <div onClick={this.props.goBackToAll}>{this.props.username}'s Cypto Coins</div>
         <Button onClick={this.props.handleLogout}>Logout</Button><br/>
       </Header>
       <Dropdown placeholder='Sort By' fluid selection options={sortOptions} onChange={this.props.handleSort}/><br/>

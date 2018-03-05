@@ -9,14 +9,19 @@ import CoinsContainer from './containers/CoinsContainer'
 
 class App extends Component {
   state = {
-    loggedIn: false
+    loggedIn: false,
+    username: "",
+    password: ""
   }
 
   handleLogin = event => {
-    // let username = event.target.parentElement.children[0].children[0].value
-    // let password = event.target.parentElement.children[1].children[0].value
+    let currentUser = event.target.children[1].children[1].children[0].value
+    let currentPassword = event.target.children[2].children[1].children[0].value
+    
     this.setState({
-      loggedIn: !this.state.loggedIn
+      loggedIn: !this.state.loggedIn,
+      username: currentUser,
+      password: currentPassword
     })
   }
 
@@ -29,7 +34,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <Route exact path = "/" render={() => <CoinsContainer loggedIn={this.state.loggedIn} handleLogin={this.handleLogin} handleLogout={this.handleLogout} /> }  />
+        <Route exact path = "/" render={() => <CoinsContainer loggedIn={this.state.loggedIn} handleLogin={this.handleLogin} handleLogout={this.handleLogout} username={this.state.username} /> }  />
       </Router>
     );
   }

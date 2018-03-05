@@ -103,7 +103,7 @@ class CoinsContainer extends React.Component {
     return this.props.loggedIn ?
      (
       <Container textAlign="center" >
-        <NavBar goBackToAll={this.goBackToAll} showAll={this.state.showAll} handleSearch={this.handleSearch} handleSort={this.handleSort} handleLogout={this.props.handleLogout}/>
+        <NavBar username={this.props.username} goBackToAll={this.goBackToAll} showAll={this.state.showAll} handleSearch={this.handleSearch} handleSort={this.handleSort} handleLogout={this.props.handleLogout}/>
         {this.state.showAll ?
         <Container textAlign="center" >
           <Card.Group itemsPerRow={4} textAlign="center">
