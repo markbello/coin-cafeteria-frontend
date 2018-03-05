@@ -32,3 +32,7 @@
   transform-origin:50% 50%;
   animation:3s App-logo-spin infinite linear;
 }
+
+.login {
+  margin-top: 200px;
+}

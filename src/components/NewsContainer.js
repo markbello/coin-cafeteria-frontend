@@ -4,8 +4,6 @@ import NewsAPI from 'newsapi'
 import Watson from 'watson-developer-cloud'
 import NaturalLanguageUnderstandingV1 from 'watson-developer-cloud/natural-language-understanding/v1.js'
 
-
-
 class NewsContainer extends React.Component {
 
   state = {

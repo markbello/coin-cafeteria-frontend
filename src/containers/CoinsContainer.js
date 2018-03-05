@@ -3,6 +3,7 @@ import Coin from '../components/Coin'
 import CoinInfo from '../components/CoinInfo'
 import NavBar from '../components/NavBar'
 import {Card, Header,Container, Search} from 'semantic-ui-react'
+import Login from '../components/Login'
 
 class CoinsContainer extends React.Component {
   state = {
@@ -99,8 +100,8 @@ class CoinsContainer extends React.Component {
       let logo = require(`../icon/${coin.symbol.toLowerCase()}.png`)
       return <Coin key= {coin.id} coin={coin} logo={logo} showCoinInfo={this.showCoinInfo} />
     })
-
-    return (
+    return this.props.loggedIn ?
+     (
       <Container textAlign="center" >
         <NavBar goBackToAll={this.goBackToAll} showAll={this.state.showAll} handleSearch={this.handleSearch} handleSort={this.handleSort}/>
         {this.state.showAll ?
@@ -113,8 +114,12 @@ class CoinsContainer extends React.Component {
         <CoinInfo coin={this.state.currentCoin} logo={require(`../icon/${this.state.currentCoin.symbol.toLowerCase()}.png`)} />
       }
     </Container>
-
     )
+    :
+    <div className="login" style={{display: 'flex', justifyContent: 'center'}}>
+      <Login handleLogin={this.props.handleLogin}/>
+    </div>
+
   }
 }
 
