@@ -4,22 +4,26 @@ import {Header, Container, Form, Input, Button, Checkbox} from 'semantic-ui-reac
 class Login extends React.Component {
 
   render() {
-    console.log(this.props.handleLogin)
     return(
-      <Form onSubmit={this.props.handleLogin} >
+      <Form  >
         <Header>Login Page</Header>
         <Form.Field>
           <label>Username</label>
-          <Input type="text" placeholder="Username"/>
+          <Input type="text" placeholder="Username" onChange={this.props.handleUsernameInput}/>
         </Form.Field>
         <Form.Field>
           <label>Password</label>
-          <Input type="password" placeholder="Password"/>
+          <Input type="password" placeholder="Password" onChange={this.props.handlePasswordInput}/>
         </Form.Field>
         <Form.Field>
-          <Checkbox label='I agree to the Terms and Conditions' />
+          <Checkbox label='I agree to the Terms and Conditions' onChange={this.props.handleCheck} />
         </Form.Field>
-        <Button type='submit'>Submit</Button>
+        <Form.Field>
+          <Button type='submit' onClick={this.props.handleLogin}>Submit</Button>
+        </Form.Field>
+        <Form.Field>
+          <Button type='submit' onClick={this.props.createUser}>Create User</Button>
+        </Form.Field>
       </Form>
     )
   }

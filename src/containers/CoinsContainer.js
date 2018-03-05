@@ -100,7 +100,7 @@ class CoinsContainer extends React.Component {
       let logo = require(`../icon/${coin.symbol.toLowerCase()}.png`)
       return <Coin key= {coin.id} coin={coin} logo={logo} showCoinInfo={this.showCoinInfo} />
     })
-    return this.props.loggedIn ?
+    return this.props.loggedIn && this.props.checked ?
      (
       <Container textAlign="center" >
         <NavBar username={this.props.username} goBackToAll={this.goBackToAll} showAll={this.state.showAll} handleSearch={this.handleSearch} handleSort={this.handleSort} handleLogout={this.props.handleLogout}/>
@@ -117,7 +117,7 @@ class CoinsContainer extends React.Component {
     )
     :
     <div className="login" style={{display: 'flex', justifyContent: 'center'}}>
-      <Login handleLogin={this.props.handleLogin}/>
+      <Login handleLogin={this.props.handleLogin} handleCheck={this.props.handleCheck} createUser={this.props.createUser} handleUsernameInput={this.props.handleUsernameInput} handlePasswordInput={this.props.handlePasswordInput}/>
     </div>
 
   }
