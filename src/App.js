@@ -125,6 +125,7 @@ class App extends Component {
         password: this.state.password
       })
     }).then(res => res.json()).then(json => {
+      localStorage.setItem("token", json.token)
       if (json.token) {
         this.setState({loggedIn: true}, ()=>this.props.history.push("/"))
       } else {
