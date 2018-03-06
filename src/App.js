@@ -35,16 +35,35 @@ class App extends Component {
       if (json.error) {
         alert(json.error)
       } else {
-        localStorage.setItem("token", json[0].token)
-        let newCoins = json[2].map(coin => coin.symbol)
+        localStorage.setItem("token", json.token)
+        let newCoins = json.coins.map(coin => coin.symbol)
         this.setState({
           loggedIn: true,
-          userId: json[1].id,
-          username: json[1].username,
+          userId: json.user.id,
+          username: json.user.username,
           favoriteCoins: newCoins
         }, ()=>this.props.history.push("/"))
       }
     })
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem("token")) {
+      fetch(`http://localhost:3000/current_user`, {
+        method: "POST",
+        headers: {"Authorization": localStorage.getItem("token")}
+      }).then(res=>res.json()).then(json => {
+        console.log(json)
+        let newCoins = json.coins.map(coin => coin.symbol)
+        this.setState({
+          loggedIn: true,
+          userId: json.id,
+          username: json.username,
+          favoriteCoins: newCoins,
+          checked: true
+        },()=>this.props.history.push("/"))
+      })
+    }
   }
 
   addFavorite = (symbol) => {
@@ -78,6 +97,7 @@ class App extends Component {
   }
 
   handleLogout = event => {
+    localStorage.removeItem("token")
     this.setState({
       loggedIn: false,
       checked: false
