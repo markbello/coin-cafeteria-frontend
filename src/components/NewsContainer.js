@@ -22,7 +22,7 @@ class NewsContainer extends React.Component {
 
   fetchNewsFromInternalApi = (props) => {
     console.log(props.symbol)
-    fetch(`http://localhost:3001/articles/${props.symbol}`)
+    fetch(`http://localhost:3000/articles/${props.symbol}`)
     .then(res => res.json())
     .then(json => {
       let score = json.reduce((acc, next) => {
@@ -81,7 +81,7 @@ class NewsContainer extends React.Component {
         article.score = response.sentiment.document.score
         console.log(this.state.score)
         let newArticles = [...this.state.articles, article]
-        
+
         this.setState({
           articles: newArticles,
           score: this.state.score + article.score
