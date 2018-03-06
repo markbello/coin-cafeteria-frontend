@@ -12,11 +12,29 @@ class NewsContainer extends React.Component {
   }
 
   componentDidMount(){
-    this.fetchNews(this.props)
+    // this.fetchNews(this.props)
+    this.fetchNewsFromInternalApi(this.props)
   }
 
   componentWillReceiveProps(nextProps){
-    this.fetchNews(nextProps)
+    this.fetchNewsFromInternalApi(nextProps)
+  }
+
+  fetchNewsFromInternalApi = (props) => {
+    console.log(props.symbol)
+    fetch(`http://localhost:3001/articles/${props.symbol}`)
+    .then(res => res.json())
+    .then(json => {
+      let score = json.reduce((acc, next) => {
+        return acc + next.score
+      }, 0)
+      score /= 20
+      this.setState({
+        articles: json,
+        score: score
+      }
+    )}
+  )
   }
 
   fetchNews = (props) => {
@@ -63,7 +81,7 @@ class NewsContainer extends React.Component {
         article.score = response.sentiment.document.score
         console.log(this.state.score)
         let newArticles = [...this.state.articles, article]
-        newArticles.sort((a,b) => a.publishedAt > b.publishedAt)
+        
         this.setState({
           articles: newArticles,
           score: this.state.score + article.score
@@ -83,12 +101,12 @@ class NewsContainer extends React.Component {
       <Segment>
         <Header>Overall Vibe Right Now is {this.state.score > 0 ? 'Positive' : 'Negative'} - Score is {this.state.score}</Header>
         <Feed size='large'>
-          {this.state.articles.sort((a,b) => a.publishedAt < b.publishedAt).map((article) =>
+          {this.state.articles.map((article) =>
             <Feed.Event>
               <Feed.Content>
                 <Feed.Summary>
                   <a href={article.url}>{article.title}</a>
-                  <Feed.Date>{article.publishedAt}</Feed.Date>
+                  <Feed.Date>{article.date}</Feed.Date>
                 </Feed.Summary>
 
                 <Feed.Extra text>{article.description}</Feed.Extra>

@@ -66,7 +66,7 @@ const CoinInfo = (props) => {
             24 Hr Volume
           </Card.Header>
           <Card.Content textAlign="center">
-            {props.coin["24h_volume_usd"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            {props.coin["volume_usd"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </Card.Content>
         </Card>
 

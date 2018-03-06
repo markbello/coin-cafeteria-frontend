@@ -18,9 +18,12 @@ class CoinsContainer extends React.Component {
   }
 
   componentDidMount() {
-    fetch('https://api.coinmarketcap.com/v1/ticker/')
+    // fetch('https://api.coinmarketcap.com/v1/ticker/')
+    fetch('http://localhost:3001/coins/')
     .then(res => res.json())
-    .then(json => this.setState({coins: json}))
+    .then(json => {
+      this.setState({coins: json})
+    })
   }
 
   showCoinInfo = event => {
