@@ -5,7 +5,7 @@ import NewsContainer from './NewsContainer'
 const CoinInfo = (props) => {
   const {name, rank, symbol, price_usd, percent_change_1h, percent_change_24h, percent_change_7d, market_cap_usd, available_supply, total_supply} = props.coin
 
-  let image = <img src={props.logo} alt={symbol} width="40px" height="40px" />
+  let image = <img src={props.logo} alt={symbol} className="logo" width="40px" height="40px" />
   return (
     <div>
       <Header as="h1" textAlign="center">

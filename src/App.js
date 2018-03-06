@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import './App.css';
 import './semantic/dist/semantic.min.css'
 
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import {Route, Switch, withRouter } from 'react-router-dom'
 import CoinsContainer from './containers/CoinsContainer'
+import Login from './components/Login'
 
 class App extends Component {
   state = {
@@ -12,8 +13,8 @@ class App extends Component {
     username: "",
     password: "",
     userId: "",
-    favorite: [],
-    checked: false
+    checked: false,
+    favoriteCoins: []
   }
 
   handleCheck = () => {
@@ -35,24 +36,45 @@ class App extends Component {
         alert(json.error)
       } else {
         localStorage.setItem("token", json[0].token)
+        let newCoins = json[2].map(coin => coin.symbol)
         this.setState({
           loggedIn: true,
           userId: json[1].id,
           username: json[1].username,
-          // favorite: json[2]
-        })
+          favoriteCoins: newCoins
+        }, ()=>this.props.history.push("/"))
       }
     })
   }
 
-  updateFavorite = () => {
+  addFavorite = (symbol) => {
     fetch(`http://localhost:3000/users/${this.state.userId}`, {
       method: "PATCH",
       headers: {"Content-Type": "application/json" },
       body: JSON.stringify({
-        favorite: [{symbol: "apple"}, {symbol: "pie"}]
+        coins: symbol
       })
-    }).then(res=>res.json()).then(console.log)
+    }).then(res=>res.json()).then(json => {
+      let newCoins = json.coins.map(coin => coin.symbol)
+      this.setState({
+        favoriteCoins: newCoins
+      })
+    })
+  }
+
+  removeFavorite = (symbol) => {
+    fetch(`http://localhost:3000/users/${this.state.userId}`, {
+      method: "DELETE",
+      headers: {"Content-Type": "application/json" },
+      body: JSON.stringify({
+        coins: symbol
+      })
+    }).then(res=>res.json()).then(json => {
+      let newCoins = json.coins.map(coin => coin.symbol)
+      this.setState({
+        favoriteCoins: newCoins
+      })
+    })
   }
 
   handleLogout = event => {
@@ -84,7 +106,7 @@ class App extends Component {
       })
     }).then(res => res.json()).then(json => {
       if (json.token) {
-        this.setState({loggedIn: true})
+        this.setState({loggedIn: true}, ()=>this.props.history.push("/"))
       } else {
         alert(json.error)
       }
@@ -92,22 +114,26 @@ class App extends Component {
   }
 
   render() {
-
     return (
-      <Router>
-        <Route exact path = "/" render={() => <CoinsContainer loggedIn={this.state.loggedIn}
-                                                              handleLogin={this.handleLogin}
-                                                              handleLogout={this.handleLogout}
+        <Switch>
+          <Route exact path = "/" render={(routerProps) => <CoinsContainer loggedIn={this.state.loggedIn}
+                                                                handleLogout={this.handleLogout}
+                                                                {...routerProps}
+                                                                checked={this.state.checked}
+                                                                username={this.state.username}
+                                                                addFavorite={this.addFavorite}
+                                                                removeFavorite={this.removeFavorite}
+                                                                favoriteCoins={this.state.favoriteCoins} /> }  />
+
+          <Route exact path = "/login" render={(routerProps) =>  <Login handleLogin={this.handleLogin}
                                                               handleCheck={this.handleCheck}
-                                                              checked={this.state.checked}
-                                                              username={this.state.username}
                                                               createUser={this.createUser}
+                                                              {...routerProps}
                                                               handleUsernameInput={this.handleUsernameInput}
-                                                              handlePasswordInput={this.handlePasswordInput}
-                                                              updateFavorite={this.updateFavorite} /> }  />
-      </Router>
+                                                              handlePasswordInput={this.handlePasswordInput}/> } />
+        </Switch>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

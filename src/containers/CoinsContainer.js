@@ -3,7 +3,8 @@ import Coin from '../components/Coin'
 import CoinInfo from '../components/CoinInfo'
 import NavBar from '../components/NavBar'
 import {Card, Container} from 'semantic-ui-react'
-import Login from '../components/Login'
+import { Redirect } from 'react-router'
+
 
 class CoinsContainer extends React.Component {
   state = {
@@ -12,7 +13,8 @@ class CoinsContainer extends React.Component {
     showAll: true,
     currentCoin: {},
     searchTerm: "",
-    sortBy: ""
+    sortBy: "",
+    showFavorite: false
   }
 
   componentDidMount() {
@@ -88,19 +90,37 @@ class CoinsContainer extends React.Component {
     }
   }
 
+  handleFavorite = event => {
+    if (event.target.innerText === "All Coins"){
+      this.setState({
+        showFavorite: false
+      })
+    } else {
+      this.setState({
+        showFavorite: true
+      })
+    }
+  }
+
+  displayFavorites = coins => {
+    return coins.filter(coin => {return this.props.favoriteCoins.includes(coin.symbol)})
+  }
+
 
   render() {
-    let sortedCoins = this.chooseSort([...this.state.coins])
+    let favorites = this.state.showFavorite ? this.displayFavorites([...this.state.coins]) : [...this.state.coins]
+
+    let sortedCoins = this.chooseSort(favorites)
     let searchedCoins = sortedCoins.filter(coin => {return coin.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())})
 
     let coins = searchedCoins.map(coin => {
       let logo = require(`../icon/${coin.symbol.toLowerCase()}.png`)
-      return <Coin key= {coin.id} coin={coin} logo={logo} showCoinInfo={this.showCoinInfo} />
+      return <Coin key= {coin.id} coin={coin} logo={logo} showCoinInfo={this.showCoinInfo} addFavorite={this.props.addFavorite} removeFavorite={this.props.removeFavorite} favoriteCoins={this.props.favoriteCoins} />
     })
     return this.props.loggedIn && this.props.checked ?
      (
       <Container textAlign="center" >
-        <NavBar updateFavorite={this.props.updateFavorite} username={this.props.username} goBackToAll={this.goBackToAll} showAll={this.state.showAll} handleSearch={this.handleSearch} handleSort={this.handleSort} handleLogout={this.props.handleLogout}/>
+        <NavBar handleFavorite={this.handleFavorite} username={this.props.username} goBackToAll={this.goBackToAll} showAll={this.state.showAll} handleSearch={this.handleSearch} handleSort={this.handleSort} handleLogout={this.props.handleLogout}/>
         {this.state.showAll ?
         <Container textAlign="center" >
           <Card.Group itemsPerRow={4} textAlign="center">
@@ -113,10 +133,7 @@ class CoinsContainer extends React.Component {
     </Container>
     )
     :
-    <div className="login" style={{display: 'flex', justifyContent: 'center'}}>
-      <Login handleLogin={this.props.handleLogin} handleCheck={this.props.handleCheck} createUser={this.props.createUser} handleUsernameInput={this.props.handleUsernameInput} handlePasswordInput={this.props.handlePasswordInput}/>
-    </div>
-
+    <Redirect to="/login" />
   }
 }
 
