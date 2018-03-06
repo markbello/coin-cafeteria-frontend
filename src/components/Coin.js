@@ -1,5 +1,5 @@
 import React from 'react'
-import {Card, Grid, Button} from 'semantic-ui-react'
+import {Card, Button} from 'semantic-ui-react'
 
 const Coin = (props) => {
   const {name, symbol, price_usd, percent_change_24h} = props.coin
@@ -8,7 +8,7 @@ const Coin = (props) => {
     return (parseFloat(number) - (parseFloat(percent/100 )* parseFloat(number))).toFixed(5)
   }
 
-  let image = <img src={props.logo} width="40px" height="40px" />
+  let image = <img src={props.logo} alt={symbol} width="40px" height="40px" />
   return (
     <Card >
       <Card.Header as="h2">

@@ -4,7 +4,6 @@ import './App.css';
 import './semantic/dist/semantic.min.css'
 
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Login from './components/Login'
 import CoinsContainer from './containers/CoinsContainer'
 
 class App extends Component {
@@ -12,6 +11,8 @@ class App extends Component {
     loggedIn: false,
     username: "",
     password: "",
+    userId: "",
+    favorite: [],
     checked: false
   }
 
@@ -22,19 +23,36 @@ class App extends Component {
   }
 
   handleLogin = event => {
-      fetch('http://localhost:3000/login', {
-        method: "POST",
-        headers: {"Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: this.state.username,
-          password: this.state.password
-        })
-      }).then(res => res.json()).then(json => {
-        if (json.token) {
-          localStorage.setItem("token", json.token)
-          this.setState({loggedIn: true})
-        }
+    fetch('http://localhost:3000/login', {
+      method: "POST",
+      headers: {"Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
       })
+    }).then(res => res.json()).then(json => {
+      if (json.error) {
+        alert(json.error)
+      } else {
+        localStorage.setItem("token", json[0].token)
+        this.setState({
+          loggedIn: true,
+          userId: json[1].id,
+          username: json[1].username,
+          // favorite: json[2]
+        })
+      }
+    })
+  }
+
+  updateFavorite = () => {
+    fetch(`http://localhost:3000/users/${this.state.userId}`, {
+      method: "PATCH",
+      headers: {"Content-Type": "application/json" },
+      body: JSON.stringify({
+        favorite: [{symbol: "apple"}, {symbol: "pie"}]
+      })
+    }).then(res=>res.json()).then(console.log)
   }
 
   handleLogout = event => {
@@ -65,16 +83,16 @@ class App extends Component {
         password: this.state.password
       })
     }).then(res => res.json()).then(json => {
-      console.log(json.token)
       if (json.token) {
         this.setState({loggedIn: true})
       } else {
-        console.log("wtf")
+        alert(json.error)
       }
     })
   }
 
   render() {
+
     return (
       <Router>
         <Route exact path = "/" render={() => <CoinsContainer loggedIn={this.state.loggedIn}
@@ -85,7 +103,8 @@ class App extends Component {
                                                               username={this.state.username}
                                                               createUser={this.createUser}
                                                               handleUsernameInput={this.handleUsernameInput}
-                                                              handlePasswordInput={this.handlePasswordInput} /> }  />
+                                                              handlePasswordInput={this.handlePasswordInput}
+                                                              updateFavorite={this.updateFavorite} /> }  />
       </Router>
     );
   }

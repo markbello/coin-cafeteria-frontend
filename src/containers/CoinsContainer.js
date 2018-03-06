@@ -2,7 +2,7 @@ import React from 'react'
 import Coin from '../components/Coin'
 import CoinInfo from '../components/CoinInfo'
 import NavBar from '../components/NavBar'
-import {Card, Header,Container, Search} from 'semantic-ui-react'
+import {Card, Container} from 'semantic-ui-react'
 import Login from '../components/Login'
 
 class CoinsContainer extends React.Component {
@@ -12,7 +12,7 @@ class CoinsContainer extends React.Component {
     showAll: true,
     currentCoin: {},
     searchTerm: "",
-    sortBy: "Rank"
+    sortBy: ""
   }
 
   componentDidMount() {
@@ -81,13 +81,10 @@ class CoinsContainer extends React.Component {
   chooseSort = (coins) => {
     switch(this.state.sortBy) {
       case("Rank"): return this.sortRank(coins)
-      break
       case("Alphabetical"): return this.sortAlphabetical(coins)
-      break
       case("Price"): return this.sortPrice(coins)
-      break
       case("Percent Change"): return this.sortPercentChange(coins)
-      break
+      default: return this.sortRank(coins)
     }
   }
 
@@ -103,7 +100,7 @@ class CoinsContainer extends React.Component {
     return this.props.loggedIn && this.props.checked ?
      (
       <Container textAlign="center" >
-        <NavBar username={this.props.username} goBackToAll={this.goBackToAll} showAll={this.state.showAll} handleSearch={this.handleSearch} handleSort={this.handleSort} handleLogout={this.props.handleLogout}/>
+        <NavBar updateFavorite={this.props.updateFavorite} username={this.props.username} goBackToAll={this.goBackToAll} showAll={this.state.showAll} handleSearch={this.handleSearch} handleSort={this.handleSort} handleLogout={this.props.handleLogout}/>
         {this.state.showAll ?
         <Container textAlign="center" >
           <Card.Group itemsPerRow={4} textAlign="center">
