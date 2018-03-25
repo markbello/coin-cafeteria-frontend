@@ -20,7 +20,7 @@ const Coin = (props) => {
         Previous Value: <p style={{color:"grey"}}>${calculateChange(price_usd, percent_change_24h)}</p>
         Current Value: <p style={percent_change_24h > 0 ? {color:"green"} : {color:"red"}}>${parseFloat(price_usd).toFixed(5)}</p>
         24HR Percent Change: <p style={percent_change_24h > 0 ? {color:"green"} : {color:"red"}}>{percent_change_24h}%</p>
-        <Button onClick={props.showCoinInfo} id={symbol}> Show More Info</Button>
+        <Button onClick={props.showCoinInfo} id={symbol}>Show More Info</Button>
         <Button onClick={() => props.addFavorite(symbol)} id={symbol}>Add to Favorites</Button>
         {props.favoriteCoins.includes(symbol) ? <Button onClick={() => props.removeFavorite(symbol)} id={symbol}>Remove from Favorites</Button> : null}
       </Card.Content>

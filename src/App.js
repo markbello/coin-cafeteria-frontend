@@ -53,7 +53,7 @@ class App extends Component {
         method: "POST",
         headers: {"Authorization": localStorage.getItem("token")}
       }).then(res=>res.json()).then(json => {
-        console.log(json)
+        debugger
         let newCoins = json.coins.map(coin => coin.symbol)
         this.setState({
           loggedIn: true,
@@ -68,7 +68,7 @@ class App extends Component {
 
   addFavorite = (symbol) => {
     fetch(`http://localhost:3000/users/${this.state.userId}`, {
-      method: "PATCH",
+      method: "POST",
       headers: {"Content-Type": "application/json" },
       body: JSON.stringify({
         coins: symbol
@@ -100,7 +100,11 @@ class App extends Component {
     localStorage.removeItem("token")
     this.setState({
       loggedIn: false,
-      checked: false
+      checked: false,
+      username: "",
+      password: "",
+      userId: "",
+      favoriteCoins: []
     })
   }
 
