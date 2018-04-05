@@ -19,7 +19,7 @@ class CoinsContainer extends React.Component {
 
   componentDidMount() {
     // fetch('https://api.coinmarketcap.com/v1/ticker/')
-    fetch('http://localhost:3000/coins/')
+    fetch('https://coin-cafeteria-api.herokuapp.com/coins/')
     .then(res => res.json())
     .then(json => {
       this.setState({coins: json})

@@ -24,7 +24,7 @@ class App extends Component {
   }
 
   handleLogin = event => {
-    fetch('http://localhost:3000/login', {
+    fetch('https://coin-cafeteria-api.herokuapp.com/login', {
       method: "POST",
       headers: {"Content-Type": "application/json" },
       body: JSON.stringify({
@@ -49,7 +49,7 @@ class App extends Component {
 
   componentDidMount() {
     if (localStorage.getItem("token")) {
-      fetch(`http://localhost:3000/current_user`, {
+      fetch(`https://coin-cafeteria-api.herokuapp.com/current_user`, {
         method: "POST",
         headers: {"Authorization": localStorage.getItem("token")}
       }).then(res=>res.json()).then(json => {
@@ -67,7 +67,7 @@ class App extends Component {
   }
 
   addFavorite = (symbol) => {
-    fetch(`http://localhost:3000/users/${this.state.userId}`, {
+    fetch(`https://coin-cafeteria-api.herokuapp.com/users/${this.state.userId}`, {
       method: "POST",
       headers: {"Content-Type": "application/json" },
       body: JSON.stringify({
@@ -82,7 +82,7 @@ class App extends Component {
   }
 
   removeFavorite = (symbol) => {
-    fetch(`http://localhost:3000/users/${this.state.userId}`, {
+    fetch(`https://coin-cafeteria-api.herokuapp.com/users/${this.state.userId}`, {
       method: "DELETE",
       headers: {"Content-Type": "application/json" },
       body: JSON.stringify({
@@ -121,7 +121,7 @@ class App extends Component {
   }
 
   createUser = () => {
-    fetch('http://localhost:3000/users', {
+    fetch('https://coin-cafeteria-api.herokuapp.com/users', {
       method: "POST",
       headers: {"Content-Type": "application/json" },
       body: JSON.stringify({
