@@ -9,7 +9,7 @@ import Login from './components/Login'
 
 class App extends Component {
   state = {
-    loggedIn: false,
+    loggedIn: true,
     username: "",
     password: "",
     userId: "",
