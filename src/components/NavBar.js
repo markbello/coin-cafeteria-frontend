@@ -15,10 +15,8 @@ class NavBar extends React.Component {
     return (
     <Container>
       <Header as='h1' color="red" textAlign="center" >
-        <div onClick={this.props.goBackToAll}>{this.props.username}'s Crypto Coins</div>
-        <Button onClick={this.props.handleLogout}>Logout</Button><br/>
+        <div onClick={this.props.goBackToAll}>Coin Cafeteria</div>
       </Header>
-      <Favorite handleFavorite={this.props.handleFavorite}/>
       <Dropdown placeholder='Sort By' fluid selection options={sortOptions} onChange={this.props.handleSort}/><br/>
       <Search onSearchChange={this.props.handleSearch} placeholder="Search" showNoResults={false} /><br/>
     </Container>
@@ -27,3 +25,5 @@ class NavBar extends React.Component {
 }
 
 export default NavBar
+
+// <Favorite handleFavorite={this.props.handleFavorite}/>
