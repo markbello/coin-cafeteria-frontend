@@ -117,10 +117,11 @@ class CoinsContainer extends React.Component {
     let searchedCoins = sortedCoins.filter(coin => {return coin.name.toLowerCase().includes(this.state.searchTerm.toLowerCase())})
 
     let coins = searchedCoins.map(coin => {
+      let logo
       try{
-        let logo = require(`../icon/${coin.symbol.toLowerCase()}.png`)
+        logo = require(`../icon/${coin.symbol.toLowerCase()}.png`)
       } catch(e){
-        let logo = require(`../icon/btc.png`)
+        logo = require(`../icon/btc.png`)
       }
       return <Coin key= {coin.id} coin={coin} logo={logo} showCoinInfo={this.showCoinInfo} addFavorite={this.props.addFavorite} removeFavorite={this.props.removeFavorite} favoriteCoins={this.props.favoriteCoins} />
     })
