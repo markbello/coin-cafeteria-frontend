@@ -119,7 +119,7 @@ class CoinsContainer extends React.Component {
     let coins = searchedCoins.map(coin => {
       try{
         let logo = require(`../icon/${coin.symbol.toLowerCase()}.png`)
-      } catch{
+      } catch(e){
         let logo = require(`../icon/btc.png`)
       }
       return <Coin key= {coin.id} coin={coin} logo={logo} showCoinInfo={this.showCoinInfo} addFavorite={this.props.addFavorite} removeFavorite={this.props.removeFavorite} favoriteCoins={this.props.favoriteCoins} />
